@@ -1,5 +1,7 @@
 #include "vex.h"
+#include "robot-config.h"
 #include "constants.h"
+#include "PID.h"
 using namespace vex;
 
 bool WingAreOpen = false;
@@ -11,20 +13,24 @@ brain Brain;
 controller Controller1 = controller(primary);
 
 // Chassis
-//Motor rojo  18:1
-//Motor verde 36:1
-//Motor azul   6:1
+//Motor rojo  ratio18_1
+//Motor verde ratio36_1
+//Motor azul  ratio6_1
 inertial DrivetrainInertial = inertial(PORT11);
-motor RightDriveA = motor(PORT8, ratio36_1, true);
-motor RightDriveB = motor(PORT9, ratio36_1, true);
-motor RightDriveC = motor(PORT10, ratio36_1, true);
+motor RightDriveA = motor(PORT3, ratio36_1, false);
+motor RightDriveB = motor(PORT4, ratio36_1, false);
+//motor RightDriveC = motor(PORT10, ratio36_1, true);
 
-motor LeftDriveA = motor(PORT3, ratio36_1, false);
-motor LeftDriveB = motor(PORT1, ratio36_1, false);
-motor LeftDriveC = motor(PORT7, ratio36_1, false);
+motor LeftDriveA = motor(PORT1, ratio36_1, true);
+motor LeftDriveB = motor(PORT2, ratio36_1, true);
+//motor LeftDriveC = motor(PORT7, ratio36_1, false);
 
-motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB, LeftDriveC);
-motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB, RightDriveC);
+motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
+motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
+
+//Climber
+motor ClimbRight = motor(PORT9, ratio36_1, false);
+motor ClimbLeft = motor(PORT10, ratio36_1, true);
 
 /*
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainInertial, 
@@ -38,6 +44,8 @@ motor ClimberRight = motor(PORT9, ratio36_1, true);
 motor_group Climber = motor_group(ClimberLeft, ClimberRight);
 */
 
+
+//Controller options 
 bool RemoteControlCodeEnabled = true;
 bool DrivetrainLNeedsToBeStopped_Controller1 = true;
 bool DrivetrainRNeedsToBeStopped_Controller1 = true;
@@ -56,6 +64,25 @@ void Climber_bwd_cb(){
 }
 */
 
+void Climber_fwd_cb(){
+  while (Controller1.ButtonUp.pressing()){
+    ClimbRight.spin(fwd, 90, percent);
+    ClimbLeft.spin(fwd, 90, percent);
+  }
+  ClimbRight.stop();
+  ClimbLeft.stop();
+
+}
+
+void Climber_bwd_cb(){
+  while (Controller1.ButtonDown.pressing()){
+    ClimbRight.spin(reverse, 90, percent);
+    ClimbLeft.spin(reverse, 90, percent);
+  }
+  ClimbRight.stop();
+  ClimbLeft.stop();
+}
+
 /*--------------------------------------------------------------------------*/
 /*                   rc_auto_loop_function_Controller1()                    */
 /*                                                                          */
@@ -63,15 +90,16 @@ void Climber_bwd_cb(){
 /*               se repetiran una vez el control se inicialice              */
 /*--------------------------------------------------------------------------*/
 int rc_auto_loop_function_Controller1() {
+
+  task billWithTheScienceFi(drivePID);
+
   //Funciones de botones y sistemas
-  //..............................
-  //..............................
 
   //Controller1.ButtonB.pressed(Wings_cb);
   //Controller1.ButtonX.pressed(Wings_cb);
 
-  //Controller1.ButtonUp.pressed(Climber_fwd_cb);
-  //Controller1.ButtonDown.pressed(Climber_bwd_cb);
+  Controller1.ButtonUp.pressed(Climber_fwd_cb);
+  Controller1.ButtonDown.pressed(Climber_bwd_cb);
   while(true) {
     chassis_control();
   }
@@ -105,11 +133,11 @@ void vexcodeInit( void ) {
 /*--------------------------------------------------------------------------*/
 void chassis_control(){
   //DESCOMENTAR ESTO PARA UNA VELOCIDAD MANEJABLE MEDIO LENTA MEDIO RAPIDA
-  int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (0.7*Controller1.Axis1.position()));
-  int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (0.7*Controller1.Axis1.position()));
+  //int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (0.7*Controller1.Axis1.position()))/2;
+  //int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (0.7*Controller1.Axis1.position()))/2;
 
-  //int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (Controller1.Axis1.position()));
-  //int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (Controller1.Axis1.position()));
+  int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (Controller1.Axis1.position()));
+  int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (Controller1.Axis1.position()));
   
   if (drivetrainLeftSideSpeed < JOYSTICK_DEADBAND && drivetrainLeftSideSpeed > -JOYSTICK_DEADBAND) {
     if (DrivetrainLNeedsToBeStopped_Controller1) {
