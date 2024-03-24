@@ -102,7 +102,7 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    display_info(); //Es bueno imprimir para que se muestren varios valores mientras corre el robot
+    // display_info(); //Es bueno imprimir para que se muestren varios valores mientras corre el robot
     wait(100, msec);
   }
 }
