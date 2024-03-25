@@ -3,6 +3,7 @@
 using namespace vex;
 
 bool WingAreOpen = false;
+bool ClimberIsActive = false;
 
 // Cerebelo
 brain Brain;
@@ -26,11 +27,8 @@ motor LeftDriveC = motor(PORT7, ratio36_1, false);
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB, LeftDriveC);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB, RightDriveC);
 
-
-/*
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainInertial, 
   WHEEL_TRAVEL, TRACK_WIDTH, TRACK_BASE, mm, EXT_GEAR_RATIO);
-*/
 
 
 // Climber
@@ -65,12 +63,8 @@ void Climber_bwd_cb(){
 /*--------------------------------------------------------------------------*/
 int rc_auto_loop_function_Controller1() {
   //Funciones de botones y sistemas
-  //..............................
-  //..............................
-
   //Controller1.ButtonB.pressed(Wings_cb);
   //Controller1.ButtonX.pressed(Wings_cb);
-
   Controller1.ButtonUp.pressed(Climber_fwd_cb);
   Controller1.ButtonDown.pressed(Climber_bwd_cb);
   while(true) {
@@ -106,11 +100,9 @@ void vexcodeInit( void ) {
 /*--------------------------------------------------------------------------*/
 void chassis_control(){
   //DESCOMENTAR ESTO PARA UNA VELOCIDAD MANEJABLE MEDIO LENTA MEDIO RAPIDA
-  int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (0.7*Controller1.Axis1.position()));
-  int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (0.7*Controller1.Axis1.position()));
-
-  //int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (Controller1.Axis1.position()));
-  //int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (Controller1.Axis1.position()));
+  int power = 0.7;
+  int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (power*Controller1.Axis1.position()));
+  int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (power*Controller1.Axis1.position()));
   
   if (drivetrainLeftSideSpeed < JOYSTICK_DEADBAND && drivetrainLeftSideSpeed > -JOYSTICK_DEADBAND) {
     if (DrivetrainLNeedsToBeStopped_Controller1) {

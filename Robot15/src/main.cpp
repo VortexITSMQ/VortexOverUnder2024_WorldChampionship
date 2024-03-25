@@ -19,6 +19,7 @@
 //#include "autonomus.h"
 #include "robot-config.h"
 #include "bits/stdc++.h" //Librerias esenciales de C++
+
 using namespace vex;
 competition Competition;
 
@@ -85,7 +86,6 @@ void skills(){
 
 void usercontrol(void) {
   //enableDrivePID = false;
-  
   // User control code here, inside the loop
   rc_auto_loop_function_Controller1();
 }
@@ -96,13 +96,12 @@ int main() {
   Competition.autonomous(autonomous);
   //Competition.autonomous(skills);
   Competition.drivercontrol(usercontrol);
-
+  
   // Run the pre-autonomous function.
   pre_auton();
-
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    // display_info(); //Es bueno imprimir para que se muestren varios valores mientras corre el robot
+    // display_info(); // Imprime info del robot
     wait(100, msec);
   }
 }
