@@ -16,6 +16,8 @@ extern motor_group LeftDriveSmart;
 extern motor_group RightDriveSmart;
 extern smartdrive Drivetrain;
 
+extern motor Thrower;
+
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  *

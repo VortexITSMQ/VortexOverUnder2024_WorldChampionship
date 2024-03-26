@@ -44,8 +44,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void display_info(){
-  std::cout << "Hola desde la consola" << std::endl;
-  Brain.Screen.print("Hola desde el cerebro");
+  std::cout << Thrower.rotation(rotationUnits::deg) << std::endl;
+  Brain.Screen.print(Thrower.rotation(rotationUnits::deg));
 }
 
 /*---------------------------------------------------------------------------*/

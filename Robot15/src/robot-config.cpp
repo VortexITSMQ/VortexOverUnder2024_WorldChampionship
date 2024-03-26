@@ -21,16 +21,19 @@ motor RightDriveA = motor(PORT3, ratio36_1, false);
 motor RightDriveB = motor(PORT4, ratio36_1, false);
 //motor RightDriveC = motor(PORT10, ratio36_1, true);
 
-motor LeftDriveA = motor(PORT1, ratio36_1, true);
-motor LeftDriveB = motor(PORT2, ratio36_1, true);
+motor LeftDriveA = motor(PORT2, ratio36_1, true);
+motor LeftDriveB = motor(PORT1, ratio36_1, true);
 //motor LeftDriveC = motor(PORT7, ratio36_1, false);
 
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
 
-//Climber
-motor ClimbRight = motor(PORT9, ratio36_1, false);
-motor ClimbLeft = motor(PORT10, ratio36_1, true);
+//Collector
+motor CollectorRight = motor(PORT9, ratio36_1, false);
+motor CollectorLeft = motor(PORT10, ratio36_1, true);
+
+//Thrower
+motor Thrower = motor(PORT11, ratio36_1, false);
 
 /*
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainInertial, 
@@ -65,23 +68,72 @@ void Climber_bwd_cb(){
 */
 
 void Climber_fwd_cb(){
-  while (Controller1.ButtonUp.pressing()){
-    ClimbRight.spin(fwd, 90, percent);
-    ClimbLeft.spin(fwd, 90, percent);
+  while (Controller1.ButtonR1.pressing()){
+    CollectorRight.spin(fwd, 90, percent);
+    CollectorLeft.spin(fwd, 90, percent);
   }
-  ClimbRight.stop();
-  ClimbLeft.stop();
+  CollectorRight.stop();
+  CollectorLeft.stop();
 
 }
 
 void Climber_bwd_cb(){
-  while (Controller1.ButtonDown.pressing()){
-    ClimbRight.spin(reverse, 90, percent);
-    ClimbLeft.spin(reverse, 90, percent);
+  while (Controller1.ButtonR2.pressing()){
+    CollectorRight.spin(reverse, 90, percent);
+    CollectorLeft.spin(reverse, 90, percent);
   }
-  ClimbRight.stop();
-  ClimbLeft.stop();
+  CollectorRight.stop();
+  CollectorLeft.stop();
 }
+
+int target_position = 0; // Posición objetivo inicial (0 grados)
+bool Throwing = false;
+
+void Thrower_cb() {
+    // Si se presiona el botón A y no se está lanzando actualmente
+  // if (Controller1.ButtonR1.pressing() && !Throwing) {
+  //   while(true){
+  //     Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
+  //     Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
+  //     Throwing = true;
+  //     if(Controller1.ButtonR1.pressing()){
+  //       Throwing = false;
+  //     }
+  //   }
+  // }
+  if(Controller1.ButtonA.pressing()){
+      Throwing = true;
+  }
+  do{
+    if(Controller1.ButtonA.pressing()){
+      Throwing = false;
+    }
+    Thrower.setVelocity(100, percent);
+    Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
+    Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
+  }while(Throwing == true);
+  
+
+  // if(Controller1.ButtonA.pressing()){
+  //   Throwing = !Throwing;
+  // }
+  // while (Throwing){
+  //   Thrower.rotateTo(90, rotationUnits::deg);
+  //   Thrower.rotateTo(0, rotationUnits::deg);
+  //   if(Controller1.ButtonA.pressing()){
+  //     Thrower.rotateTo(0, rotationUnits::deg);
+  //     Throwing = false;
+  //   }
+  // }
+}
+
+void RotateToZero() {
+    if (Thrower.position(rotationUnits::deg)) { // Si el motor ha terminado de rotar
+        Thrower.rotateTo(0, rotationUnits::deg); // Regresar a la posición inicial (0 grados)
+    }
+}
+
+
 
 /*--------------------------------------------------------------------------*/
 /*                   rc_auto_loop_function_Controller1()                    */
@@ -98,8 +150,9 @@ int rc_auto_loop_function_Controller1() {
   //Controller1.ButtonB.pressed(Wings_cb);
   //Controller1.ButtonX.pressed(Wings_cb);
 
-  Controller1.ButtonUp.pressed(Climber_fwd_cb);
-  Controller1.ButtonDown.pressed(Climber_bwd_cb);
+  Controller1.ButtonR1.pressed(Climber_fwd_cb);
+  Controller1.ButtonR2.pressed(Climber_bwd_cb);
+  Controller1.ButtonA.pressed(Thrower_cb);
   while(true) {
     chassis_control();
   }
