@@ -10,15 +10,16 @@
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]         [Port(s)]
-// Drivetrain           drivetrain      1, 10           
+// Drivetrain           drivetrain      1, 10   
 // Controller1          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
-#include "constants.h"
-#include "autonomus.h"
+//#include "PIDchassis.h"
+//#include "autonomus.h"
 #include "robot-config.h"
 #include "bits/stdc++.h" //Librerias esenciales de C++
+
 using namespace vex;
 competition Competition;
 
@@ -63,7 +64,6 @@ void autonomous(void) {
 
   //resetDriveSensors = true;
   //enableDrivePID = true;
-
   //desiredValue = 300;
   //turndesiredValue = 600;
   // ..........................................................................
@@ -86,9 +86,7 @@ void skills(){
 
 void usercontrol(void) {
   //enableDrivePID = false;
-  
   // User control code here, inside the loop
-  //task billWithTheScienceFi(drivePID);
   rc_auto_loop_function_Controller1();
 }
 
@@ -98,13 +96,12 @@ int main() {
   Competition.autonomous(autonomous);
   //Competition.autonomous(skills);
   Competition.drivercontrol(usercontrol);
-
+  
   // Run the pre-autonomous function.
   pre_auton();
-
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    display_info(); //Es bueno imprimir para que se muestren varios valores mientras corre el robot
+    // display_info(); // Imprime info del robot
     wait(100, msec);
   }
 }
