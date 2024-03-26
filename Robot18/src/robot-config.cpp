@@ -178,8 +178,8 @@ int rc_auto_loop_function_Controller1() {
   //Controller1.ButtonX.pressed(Wings_cb);
   // Controller1.ButtonR1.pressed(Climber_fwd_cb);
   // Controller1.ButtonR2.pressed(Climber_bwd_cb);
-  Controller1.ButtonR1.pressed(Collector_fwd_cb());
-  Controller1.ButtonR2.pressed(Collector_bwd_cb());
+  Controller1.ButtonR1.pressed(Collector_fwd_cb);
+  Controller1.ButtonR2.pressed(Collector_bwd_cb);
   Controller1.ButtonA.pressed(Thrower_cb);
   while(true) {
     chassis_control();
