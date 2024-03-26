@@ -11,9 +11,9 @@ brain Brain;
 controller Controller1 = controller(primary);
 
 // Chassis
-//Motor rojo  ratio18_1
-//Motor verde ratio36_1
-//Motor azul  ratio6_1
+// Motor rojo  ratio18_1
+// Motor verde ratio36_1
+// Motor azul  ratio6_1
 inertial DrivetrainInertial = inertial(PORT5);
 motor LeftDriveA = motor(PORT1, ratio36_1, true);
 motor LeftDriveB = motor(PORT2, ratio36_1, true);
@@ -29,7 +29,7 @@ smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainIn
   WHEEL_TRAVEL, TRACK_WIDTH, TRACK_BASE, mm, EXT_GEAR_RATIO);
 */
 
-//Collector
+// Collector
 motor RightCollector = motor(PORT10, ratio36_1, false);
 motor LeftCollector = motor(PORT9, ratio36_1, false);
 
@@ -45,30 +45,54 @@ bool RemoteControlCodeEnabled = true;
 bool DrivetrainLNeedsToBeStopped_Controller1 = true;
 bool DrivetrainRNeedsToBeStopped_Controller1 = true;
 
-// void Climber_fwd_cb(){
-//   while (Controller1.ButtonR1.pressing()){
-//     ClimberRight.spin(fwd, 90, percent);
-//     ClimberLeft.spin(fwd, 90, percent);
-//   }
-//   ClimberRight.stop();
-//   ClimberLeft.stop();
+/*-----------------------------------------------------------------------------------\
+ /$$$$$$            /$$                       /$$                                    |
+ /$$__  $$          | $$                      | $$                                   |
+| $$  \__/  /$$$$$$ | $$  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$            |
+| $$       /$$__  $$| $$ /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$           |
+| $$      | $$  \ $$| $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/           |
+| $$    $$| $$  | $$| $$| $$_____/| $$        | $$ /$$| $$  | $$| $$                 |
+|  $$$$$$/|  $$$$$$/| $$|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$                 |
+ \______/  \______/ |__/ \_______/ \_______/   \___/   \______/ |__/                 |
+------------------------------------------------------------------------------------*/
 
-// }
+bool Collecting = false;
 
-// void Climber_bwd_cb(){
-//   while (Controller1.ButtonR2.pressing()){
-//     ClimberRight.spin(reverse, 90, percent);
-//     ClimberLeft.spin(reverse, 90, percent);
-//   }
-//   ClimberRight.stop();
-//   ClimberLeft.stop();
-// }
+void Collector_fwd_cb(){
+  while (Controller1.ButtonR1.pressing()){
+    RightCollector.spin(fwd, 90, percent);
+    LeftCollector.spin(fwd, 90, percent);
+  }
+  RightCollector.stop();
+  LeftCollector.stop();
+}
+
+void Collector_bwd_cb(){
+  while (Controller1.ButtonR2.pressing()){
+    RightCollector.spin(reverse, 90, percent);
+    LeftCollector.spin(reverse, 90, percent);
+  }
+  RightCollector.stop();
+  LeftCollector.stop();
+}
+
+
+/*-----------------------------------------------------------------------------------\
+ /$$$$$$$$ /$$                                                                       |
+|__  $$__/| $$                                                                       |
+   | $$   | $$$$$$$   /$$$$$$   /$$$$$$  /$$  /$$  /$$  /$$$$$$   /$$$$$$            |
+   | $$   | $$__  $$ /$$__  $$ /$$__  $$| $$ | $$ | $$ /$$__  $$ /$$__  $$           |
+   | $$   | $$  \ $$| $$  \__/| $$  \ $$| $$ | $$ | $$| $$$$$$$$| $$  \__/           |
+   | $$   | $$  | $$| $$      | $$  | $$| $$ | $$ | $$| $$_____/| $$                 |
+   | $$   | $$  | $$| $$      |  $$$$$$/|  $$$$$/$$$$/|  $$$$$$$| $$                 |
+   |__/   |__/  |__/|__/       \______/  \_____/\___/  \_______/|__/                 |
+------------------------------------------------------------------------------------*/
 
 int target_position = 0; // Posición objetivo inicial (0 grados)
 bool Throwing = false;
 
 void Thrower_cb() {
-    // Si se presiona el botón A y no se está lanzando actualmente
+  // Si se presiona el botón A y no se está lanzando actualmente
   // if (Controller1.ButtonR1.pressing() && !Throwing) {
   //   while(true){
   //     Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
@@ -80,7 +104,7 @@ void Thrower_cb() {
   //   }
   // }
   if(Controller1.ButtonA.pressing()){
-      Throwing = true;
+    Throwing = true;
   }
   do{
     if(Controller1.ButtonA.pressing()){
@@ -89,7 +113,7 @@ void Thrower_cb() {
     Thrower.setVelocity(100, percent);
     Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
     Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
-  }while(Throwing == true);
+  } while(Throwing == true);
   
 
   // if(Controller1.ButtonA.pressing()){
@@ -105,10 +129,40 @@ void Thrower_cb() {
   // }
 }
 
+
+/*-----------------------------------------------------------------------------------\
+  /$$$$$$  /$$ /$$               /$$                                                 |
+ /$$__  $$| $$|__/              | $$                                                 |
+| $$  \__/| $$ /$$ /$$$$$$/$$$$ | $$$$$$$   /$$$$$$   /$$$$$$                        |
+| $$      | $$| $$| $$_  $$_  $$| $$__  $$ /$$__  $$ /$$__  $$                       |
+| $$      | $$| $$| $$ \ $$ \ $$| $$  \ $$| $$$$$$$$| $$  \__/                       |
+| $$    $$| $$| $$| $$ | $$ | $$| $$  | $$| $$_____/| $$                             |
+|  $$$$$$/| $$| $$| $$ | $$ | $$| $$$$$$$/|  $$$$$$$| $$                             |
+ \______/ |__/|__/|__/ |__/ |__/|_______/  \_______/|__/                             |
+------------------------------------------------------------------------------------*/
+
+// void Climber_fwd_cb(){
+//   while (Controller1.ButtonR1.pressing()){
+//     ClimberRight.spin(fwd, 90, percent);
+//     ClimberLeft.spin(fwd, 90, percent);
+//   }
+//   ClimberRight.stop();
+//   ClimberLeft.stop();
+// }
+
+// void Climber_bwd_cb(){
+//   while (Controller1.ButtonR2.pressing()){
+//     ClimberRight.spin(reverse, 90, percent);
+//     ClimberLeft.spin(reverse, 90, percent);
+//   }
+//   ClimberRight.stop();
+//   ClimberLeft.stop();
+// }
+
 void RotateToZero() {
-    if (Thrower.position(rotationUnits::deg)) { // Si el motor ha terminado de rotar
-        Thrower.rotateTo(0, rotationUnits::deg); // Regresar a la posición inicial (0 grados)
-    }
+  if (Thrower.position(rotationUnits::deg)) { // Si el motor ha terminado de rotar
+    Thrower.rotateTo(0, rotationUnits::deg); // Regresar a la posición inicial (0 grados)
+  }
 }
 
 /*--------------------------------------------------------------------------*/
@@ -118,21 +172,18 @@ void RotateToZero() {
 /*               se repetiran una vez el control se inicialice              */
 /*--------------------------------------------------------------------------*/
 int rc_auto_loop_function_Controller1() {
-
   task billWithTheScienceFi(drivePID);
-
   //Funciones de botones y sistemas
-
   //Controller1.ButtonB.pressed(Wings_cb);
   //Controller1.ButtonX.pressed(Wings_cb);
-
   // Controller1.ButtonR1.pressed(Climber_fwd_cb);
   // Controller1.ButtonR2.pressed(Climber_bwd_cb);
+  Controller1.ButtonR1.pressed(Collector_fwd_cb());
+  Controller1.ButtonR2.pressed(Collector_bwd_cb());
   Controller1.ButtonA.pressed(Thrower_cb);
   while(true) {
     chassis_control();
   }
-    
   wait(20, msec);
   return 0;
 }
@@ -175,6 +226,7 @@ void chassis_control(){
   } else {
     DrivetrainLNeedsToBeStopped_Controller1 = true;
   }
+
   if (drivetrainRightSideSpeed < JOYSTICK_DEADBAND && drivetrainRightSideSpeed > -JOYSTICK_DEADBAND) {
     if (DrivetrainRNeedsToBeStopped_Controller1) {
       RightDriveSmart.stop();
@@ -188,6 +240,7 @@ void chassis_control(){
     LeftDriveSmart.setVelocity(drivetrainLeftSideSpeed, percent);
     LeftDriveSmart.spin(forward);
   }
+
   if (DrivetrainRNeedsToBeStopped_Controller1) {
     RightDriveSmart.setVelocity(drivetrainRightSideSpeed, percent);
     RightDriveSmart.spin(forward);
