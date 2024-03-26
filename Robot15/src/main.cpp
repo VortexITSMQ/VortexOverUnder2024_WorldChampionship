@@ -15,8 +15,8 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
-//#include "PIDchassis.h"
-//#include "autonomus.h"
+#include "PID.h"
+#include "autonomus.h"
 #include "robot-config.h"
 #include "bits/stdc++.h" //Librerias esenciales de C++
 
@@ -45,8 +45,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void display_info(){
-  std::cout << Thrower.rotation(rotationUnits::deg) << std::endl;
-  Brain.Screen.print(Thrower.rotation(rotationUnits::deg));
+  std::cout << "COME PENE PEPE" << std::endl;
+  Brain.Screen.print("COME PENE PEPE");
 }
 
 /*---------------------------------------------------------------------------*/

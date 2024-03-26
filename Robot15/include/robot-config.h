@@ -8,10 +8,10 @@ extern smartdrive Drivetrain;
 //chassis
 extern motor RightDriveA;
 extern motor RightDriveB;
-extern motor RightDriveC;
+
 extern motor LeftDriveA;
 extern motor LeftDriveB;
-extern motor LeftDrivec;
+
 extern motor_group LeftDriveSmart;
 extern motor_group RightDriveSmart;
 extern smartdrive Drivetrain;
