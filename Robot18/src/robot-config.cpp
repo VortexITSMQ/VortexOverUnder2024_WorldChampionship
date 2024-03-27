@@ -40,7 +40,7 @@ motor Thrower = motor(PORT11, ratio36_1, false);
 // motor ClimberLeft = motor(PORT1, ratio18_1, false);
 // motor ClimberRight = motor(PORT10, ratio18_1, true);
 
-//Controller options 
+// Controller options 
 bool RemoteControlCodeEnabled = true;
 bool DrivetrainLNeedsToBeStopped_Controller1 = true;
 bool DrivetrainRNeedsToBeStopped_Controller1 = true;
