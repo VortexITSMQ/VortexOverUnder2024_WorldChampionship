@@ -30,7 +30,7 @@ smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainIn
 */
 
 // Collector
-motor RightCollector = motor(PORT10, ratio36_1, false);
+motor RightCollector = motor(PORT10, ratio36_1, true);
 motor LeftCollector = motor(PORT9, ratio36_1, false);
 
 //Thrower
@@ -59,6 +59,8 @@ bool DrivetrainRNeedsToBeStopped_Controller1 = true;
 bool Collecting = false;
 
 void Collector_fwd_cb(){
+  RightCollector.setVelocity(100, percent);
+  LeftCollector.setVelocity(100, percent);
   while (Controller1.ButtonR1.pressing()){
     RightCollector.spin(fwd, 90, percent);
     LeftCollector.spin(fwd, 90, percent);
@@ -68,6 +70,8 @@ void Collector_fwd_cb(){
 }
 
 void Collector_bwd_cb(){
+  RightCollector.setVelocity(100, percent);
+  LeftCollector.setVelocity(100, percent);
   while (Controller1.ButtonR2.pressing()){
     RightCollector.spin(reverse, 90, percent);
     LeftCollector.spin(reverse, 90, percent);
