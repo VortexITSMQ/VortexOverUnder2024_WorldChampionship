@@ -81,8 +81,8 @@ void Thrower_cb() {
       Throwing = false;
     }
     Thrower.setVelocity(100, percent);
-    Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
-    Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
+    // Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
+    // Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
   }while(Throwing == true);
   
 
@@ -118,7 +118,6 @@ void Climber_fwd_cb(){
   }
   ClimberRight.stop();
   ClimberLeft.stop();
-
 }
 
 void Climber_bwd_cb(){
@@ -148,14 +147,14 @@ void Climber_bwd_cb(){
 void Wings_cb(){
   //If the wings are open then we close them
   if (!WingAreOpen) {
-    //Wing.spinToPosition(100, degrees, true);
+    // Wing.spinToPosition(100, degrees, true);
     IndexerLeft.set(true);
     IndexerRight.set(true);
     WingAreOpen = true;
   }
-  //If the wings are close then we open them
+  // If the wings are close then we open them
   else {
-    //Wing.spinToPosition(-100, degrees, true);
+    // Wing.spinToPosition(-100, degrees, true);
     IndexerLeft.set(false);
     IndexerRight.set(false);
     WingAreOpen = false;
@@ -164,7 +163,7 @@ void Wings_cb(){
 
 void RotateToZero() {
     if (Thrower.position(rotationUnits::deg)) { // Si el motor ha terminado de rotar
-        Thrower.rotateTo(0, rotationUnits::deg); // Regresar a la posición inicial (0 grados)
+      // Thrower.rotateTo(0, rotationUnits::deg); // Regresar a la posición inicial (0 grados)
     }
 }
 
@@ -175,11 +174,9 @@ void RotateToZero() {
 /*               se repetiran una vez el control se inicialice              */
 /*--------------------------------------------------------------------------*/
 int rc_auto_loop_function_Controller1() {
-
   task billWithTheScienceFi(drivePID);
 
   //Funciones de botones y sistemas
-
   Controller1.ButtonB.pressed(Wings_cb);
   Controller1.ButtonX.pressed(Wings_cb);
   Controller1.ButtonR1.pressed(Climber_fwd_cb);
@@ -217,7 +214,7 @@ void vexcodeInit( void ) {
 /*           drivetrainLeftSideSpeed y de drivetrainRightSideSpeed          */
 /*--------------------------------------------------------------------------*/
 void chassis_control(){
-  int pow = 0.7;
+  float pow = 0.7;
   int div = 2;
   //DESCOMENTAR ESTO PARA UNA VELOCIDAD MANEJABLE MEDIO LENTA MEDIO RAPIDA
   int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (pow*Controller1.Axis1.position()))/div;
