@@ -58,45 +58,19 @@ bool DrivetrainRNeedsToBeStopped_Controller1 = true;
    |__/   |__/  |__/|__/       \______/  \_____/\___/  \_______/|__/                 |
 ------------------------------------------------------------------------------------*/
 
-int target_position = 0; // Posición objetivo inicial (0 grados)
 bool Throwing = false;
 
 void Thrower_cb() {
-    // Si se presiona el botón A y no se está lanzando actualmente
-  // if (Controller1.ButtonR1.pressing() && !Throwing) {
-  //   while(true){
-  //     Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
-  //     Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
-  //     Throwing = true;
-  //     if(Controller1.ButtonR1.pressing()){
-  //       Throwing = false;
-  //     }
-  //   }
-  // }
-  if(Controller1.ButtonA.pressing()){
-      Throwing = true;
-  }
-  do{
-    if(Controller1.ButtonA.pressing()){
-      Throwing = false;
+  if (!Throwing) {
+    Thrower.setVelocity(20, velocityUnits::pct);
+    while (true) {
+      Thrower.spin(directionType::rev);
     }
-    Thrower.setVelocity(100, percent);
-    // Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
-    // Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
-  }while(Throwing == true);
-  
-
-  // if(Controller1.ButtonA.pressing()){
-  //   Throwing = !Throwing;
-  // }
-  // while (Throwing){
-  //   Thrower.rotateTo(90, rotationUnits::deg);
-  //   Thrower.rotateTo(0, rotationUnits::deg);
-  //   if(Controller1.ButtonA.pressing()){
-  //     Thrower.rotateTo(0, rotationUnits::deg);
-  //     Throwing = false;
-  //   }
-  // }
+    Throwing = true;
+  } else {
+    Thrower.stop();
+    Throwing = false;
+  }
 }
 
 
@@ -113,7 +87,7 @@ void Thrower_cb() {
 
 void Climber_fwd_cb(){
   while (Controller1.ButtonR1.pressing()){
-    ClimberRight.spin(fwd, 90, percent);
+    ClimberRight.spin(fwd, 90, percent);//USE MOTOR GROUP!!
     ClimberLeft.spin(fwd, 90, percent);
   }
   ClimberRight.stop();
@@ -159,12 +133,6 @@ void Wings_cb(){
     IndexerRight.set(false);
     WingAreOpen = false;
   }
-}
-
-void RotateToZero() {
-    if (Thrower.position(rotationUnits::deg)) { // Si el motor ha terminado de rotar
-      // Thrower.rotateTo(0, rotationUnits::deg); // Regresar a la posición inicial (0 grados)
-    }
 }
 
 /*--------------------------------------------------------------------------*/
