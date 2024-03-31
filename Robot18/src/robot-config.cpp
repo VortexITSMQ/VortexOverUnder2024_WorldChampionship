@@ -34,7 +34,7 @@ motor RightCollector = motor(PORT10, ratio36_1, true);
 motor LeftCollector = motor(PORT9, ratio36_1, false);
 
 //Thrower
-motor Thrower = motor(PORT11, ratio36_1, false);
+motor Thrower = motor(PORT19, ratio18_1, false);
 
 // Climber
 // motor ClimberLeft = motor(PORT1, ratio18_1, false);
@@ -92,45 +92,19 @@ void Collector_bwd_cb(){
    |__/   |__/  |__/|__/       \______/  \_____/\___/  \_______/|__/                 |
 ------------------------------------------------------------------------------------*/
 
-int target_position = 0; // Posición objetivo inicial (0 grados)
 bool Throwing = false;
 
 void Thrower_cb() {
-  // Si se presiona el botón A y no se está lanzando actualmente
-  // if (Controller1.ButtonR1.pressing() && !Throwing) {
-  //   while(true){
-  //     Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
-  //     Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
-  //     Throwing = true;
-  //     if(Controller1.ButtonR1.pressing()){
-  //       Throwing = false;
-  //     }
-  //   }
-  // }
-  if(Controller1.ButtonA.pressing()){
-    Throwing = true;
-  }
-  do{
-    if(Controller1.ButtonA.pressing()){
-      Throwing = false;
+  if (!Throwing) {
+    Thrower.setVelocity(20, velocityUnits::pct);
+    while (true) {
+      Thrower.spin(directionType::rev);
     }
-    Thrower.setVelocity(100, percent);
-    Thrower.rotateTo(90, rotationUnits::deg); // Rotar hacia la posición objetivo
-    Thrower.rotateTo(0, rotationUnits::deg); // Rotar hacia la posición objetivo
-  } while(Throwing == true);
-  
-
-  // if(Controller1.ButtonA.pressing()){
-  //   Throwing = !Throwing;
-  // }
-  // while (Throwing){
-  //   Thrower.rotateTo(90, rotationUnits::deg);
-  //   Thrower.rotateTo(0, rotationUnits::deg);
-  //   if(Controller1.ButtonA.pressing()){
-  //     Thrower.rotateTo(0, rotationUnits::deg);
-  //     Throwing = false;
-  //   }
-  // }
+    Throwing = true;
+  } else {
+    Thrower.stop();
+    Throwing = false;
+  }
 }
 
 

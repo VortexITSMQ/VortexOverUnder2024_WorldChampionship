@@ -40,7 +40,7 @@ motor ClimberRight = motor(PORT10, ratio18_1, true);
 
 // Wings
 pneumatics IndexerRight = pneumatics(Brain.ThreeWirePort.B);
-pneumatics IndexerLeft = pneumatics(Brain.ThreeWirePort.B);
+pneumatics IndexerLeft = pneumatics(Brain.ThreeWirePort.A);
 
 // Controller options 
 bool RemoteControlCodeEnabled = true;
