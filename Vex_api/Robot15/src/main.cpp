@@ -59,7 +59,7 @@ void display_info(){
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  //auton();
+  auton();
   //task billWithTheScienceFi(drivePID);
 
   //resetDriveSensors = true;
@@ -72,7 +72,7 @@ void autonomous(void) {
 }
 
 void skills(){
- //skill();
+ skill();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -101,7 +101,7 @@ int main() {
   pre_auton();
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    // display_info(); // Imprime info del robot
+    display_info(); // Imprime info del robot
     wait(100, msec);
   }
 }

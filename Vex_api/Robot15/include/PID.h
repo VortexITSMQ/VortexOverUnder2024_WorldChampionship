@@ -1,4 +1,10 @@
+//#include "robot-config.h"
+//----------------------------
+#include "vex.h"
 #include "robot-config.h"
+#include "bits/stdc++.h"
+#include<iostream>
+
 
 // PID gains for lateral movement
 double kP = 0.0;

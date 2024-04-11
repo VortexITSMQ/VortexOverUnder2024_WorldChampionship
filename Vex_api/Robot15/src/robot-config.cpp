@@ -1,5 +1,5 @@
 #include "vex.h"
-#include "robot-config.h"
+//#include "robot-config.h"
 #include "constants.h"
 #include "PID.h"
 using namespace vex;
@@ -16,20 +16,20 @@ controller Controller1 = controller(primary);
 // Motor rojo  ratio18_1
 // Motor verde ratio36_1
 // Motor azul  ratio6_1
-inertial DrivetrainInertial = inertial(PORT5);
+inertial DrivetrainInertial = inertial(PORT6);
 motor RightDriveA = motor(PORT12, ratio36_1, false);
 motor RightDriveB = motor(PORT2, ratio36_1, false);
 
 motor LeftDriveA = motor(PORT19, ratio36_1, true);
-motor LeftDriveB = motor(PORT9, ratio36_1, true);
+motor LeftDriveB = motor(PORT10, ratio36_1, true);
 
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
 
-/*
+
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainInertial, 
   WHEEL_TRAVEL, TRACK_WIDTH, TRACK_BASE, mm, EXT_GEAR_RATIO);
-*/
+
 
 //Thrower
 motor Thrower = motor(PORT11, ratio36_1, false);
