@@ -9,6 +9,10 @@ using namespace vex;
 //--------- Main auton functions ---------//
 void auton()
 {
+  DrivetrainInertial.calibrate();
+  Drivetrain.setDriveVelocity(25, pct);
+
+  Drivetrain.driveFor(fwd, 120, distanceUnits::cm);
 
 }
 
