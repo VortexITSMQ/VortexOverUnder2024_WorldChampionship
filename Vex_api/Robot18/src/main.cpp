@@ -59,7 +59,7 @@ void display_info(){
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  //auton();
+  auton();
   //task billWithTheScienceFi(drivePID);
 
   //resetDriveSensors = true;
@@ -72,7 +72,7 @@ void autonomous(void) {
 }
 
 void skills(){
- //skill();
+ skill();
 }
 
 /*---------------------------------------------------------------------------*/
