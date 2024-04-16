@@ -14,11 +14,11 @@ controller Controller1 = controller(primary);
 //Motor rojo  18:1
 //Motor verde 36:1
 //Motor azul   6:1
-inertial DrivetrainInertial = inertial(PORT17);
-motor RightDriveA = motor(PORT10, ratio18_1, false);
-motor RightDriveB = motor(PORT20, ratio18_1, false);
-motor LeftDriveA = motor(PORT1, ratio18_1, true);
-motor LeftDriveB = motor(PORT11, ratio18_1, true);
+inertial DrivetrainInertial = inertial(PORT13);
+motor RightDriveA = motor(PORT2, ratio18_1, false);
+motor RightDriveB = motor(PORT12, ratio18_1, false);
+motor LeftDriveA = motor(PORT9, ratio18_1, true);
+motor LeftDriveB = motor(PORT19, ratio18_1, true);
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainInertial, 
@@ -30,8 +30,8 @@ pneumatics IndexerRight = pneumatics(Brain.ThreeWirePort.A);
 pneumatics IndexerLeft = pneumatics(Brain.ThreeWirePort.B);
 
 // Climber
-motor ClimberLeft = motor(PORT12, ratio36_1, false);
-motor ClimberRight = motor(PORT9, ratio36_1, true);
+motor ClimberLeft = motor(PORT1, ratio36_1, false);
+motor ClimberRight = motor(PORT4, ratio36_1, true);
 motor_group Climber = motor_group(ClimberLeft, ClimberRight);
 
 bool RemoteControlCodeEnabled = true;

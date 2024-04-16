@@ -31,6 +31,7 @@ void display_info_dinamic(){
 
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
+  std::cout << "hola5" << std::endl;
   vexcodeInit();
 }
 
@@ -43,7 +44,7 @@ void usercontrol(void) {
 }
 
 int main() {
-  Competition.autonomous(autonomous);
+  /*Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
 
   pre_auton();
@@ -52,5 +53,15 @@ int main() {
   while (true) {
     display_info_dinamic();
     wait(100, msec);
+  }*/
+  
+  pre_auton();
+  Competition.autonomous(autonomous);
+  //std::cout << "hola" << std::endl;
+  //DrivetrainInertial.calibrate();
+  while (true){
+    wait(20, msec);
+    std::cout << DrivetrainInertial.heading() << std::endl;
+    std::cout << "hola" << std::endl;
   }
 }

@@ -27,6 +27,8 @@ extern motor ClimberRight;
 extern pneumatics IndexerRight;
 extern pneumatics IndexerLeft;
 
+extern motor test;
+
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  *

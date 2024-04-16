@@ -15,11 +15,11 @@ controller Controller1 = controller(primary);
 // Motor verde ratio36_1
 // Motor azul  ratio6_1
 inertial DrivetrainInertial = inertial(PORT14);
-motor LeftDriveA = motor(PORT1, ratio36_1, true);
-motor LeftDriveB = motor(PORT2, ratio36_1, true);
+motor LeftDriveA = motor(PORT10, ratio36_1, true);
+motor LeftDriveB = motor(PORT3, ratio36_1, true);
 
-motor RightDriveA = motor(PORT3, ratio36_1, false);
-motor RightDriveB = motor(PORT4, ratio36_1, false);
+motor RightDriveA = motor(PORT20, ratio36_1, false);
+motor RightDriveB = motor(PORT13, ratio36_1, false);
 
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
@@ -29,15 +29,17 @@ smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainIn
   WHEEL_TRAVEL, TRACK_WIDTH, TRACK_BASE, mm, EXT_GEAR_RATIO);
 
 // Collector
-motor RightCollector = motor(PORT10, ratio36_1, true);
-motor LeftCollector = motor(PORT9, ratio36_1, false);
+motor RightCollector = motor(PORT15, ratio36_1, true);
+motor LeftCollector = motor(PORT16, ratio36_1, false);
+motor_group Collector = motor_group(LeftCollector, RightCollector);
 
 //Thrower
 motor Thrower = motor(PORT19, ratio18_1, false);
 
 // Climber
-// motor ClimberLeft = motor(PORT1, ratio18_1, false);
-// motor ClimberRight = motor(PORT10, ratio18_1, true);
+motor ClimberLeft = motor(PORT7, ratio18_1, false);
+motor ClimberRight = motor(PORT11, ratio18_1, true);
+motor_group Climber = motor_group(ClimberLeft, ClimberRight);
 
 // Controller options 
 bool RemoteControlCodeEnabled = true;
@@ -58,25 +60,31 @@ bool DrivetrainRNeedsToBeStopped_Controller1 = true;
 bool Collecting = false;
 
 void Collector_fwd_cb(){
-  RightCollector.setVelocity(100, percent);
-  LeftCollector.setVelocity(100, percent);
+  //RightCollector.setVelocity(100, percent);
+  //LeftCollector.setVelocity(100, percent);
+  Collector.setVelocity(100, percent);
   while (Controller1.ButtonR1.pressing()){
-    RightCollector.spin(fwd, 90, percent);
-    LeftCollector.spin(fwd, 90, percent);
+    //RightCollector.spin(fwd, 90, percent);
+    //LeftCollector.spin(fwd, 90, percent);
+    Collector.spin(fwd, 90, percent);
   }
-  RightCollector.stop();
-  LeftCollector.stop();
+  //RightCollector.stop();
+  //LeftCollector.stop();
+  Collector.stop();
 }
 
 void Collector_bwd_cb(){
-  RightCollector.setVelocity(100, percent);
-  LeftCollector.setVelocity(100, percent);
+  //RightCollector.setVelocity(100, percent);
+  //LeftCollector.setVelocity(100, percent);
+  Collector.setVelocity(100, percent);
   while (Controller1.ButtonR2.pressing()){
-    RightCollector.spin(reverse, 90, percent);
-    LeftCollector.spin(reverse, 90, percent);
+    //RightCollector.spin(reverse, 90, percent);
+    //LeftCollector.spin(reverse, 90, percent);
+    Collector.spin(reverse, 90, percent);
   }
-  RightCollector.stop();
-  LeftCollector.stop();
+  //RightCollector.stop();
+  //LeftCollector.stop();
+  Collector.stop();
 }
 
 
@@ -118,23 +126,19 @@ void Thrower_cb() {
  \______/ |__/|__/|__/ |__/ |__/|_______/  \_______/|__/                             |
 ------------------------------------------------------------------------------------*/
 
-// void Climber_fwd_cb(){
-//   while (Controller1.ButtonR1.pressing()){
-//     ClimberRight.spin(fwd, 90, percent);
-//     ClimberLeft.spin(fwd, 90, percent);
-//   }
-//   ClimberRight.stop();
-//   ClimberLeft.stop();
-// }
+void Climber_fwd_cb(){
+  while (Controller1.ButtonUp.pressing()){
+    Climber.spin(fwd, 40, percent);
+  }
+  Climber.stop();
+}
 
-// void Climber_bwd_cb(){
-//   while (Controller1.ButtonR2.pressing()){
-//     ClimberRight.spin(reverse, 90, percent);
-//     ClimberLeft.spin(reverse, 90, percent);
-//   }
-//   ClimberRight.stop();
-//   ClimberLeft.stop();
-// }
+void Climber_bwd_cb(){
+  while (Controller1.ButtonDown.pressing()){
+    Climber.spin(reverse, 40, percent);
+  }
+  Climber.stop();
+}
 
 /*--------------------------------------------------------------------------*/
 /*                   rc_auto_loop_function_Controller1()                    */
@@ -147,8 +151,8 @@ int rc_auto_loop_function_Controller1() {
   //Funciones de botones y sistemas
   //Controller1.ButtonB.pressed(Wings_cb);
   //Controller1.ButtonX.pressed(Wings_cb);
-  // Controller1.ButtonR1.pressed(Climber_fwd_cb);
-  // Controller1.ButtonR2.pressed(Climber_bwd_cb);
+  Controller1.ButtonUp.pressed(Climber_fwd_cb);
+  Controller1.ButtonDown.pressed(Climber_bwd_cb);
   Controller1.ButtonR1.pressed(Collector_fwd_cb);
   Controller1.ButtonR2.pressed(Collector_bwd_cb);
   Controller1.ButtonA.pressed(Thrower_cb);
@@ -182,11 +186,11 @@ void vexcodeInit( void ) {
 /*           drivetrainLeftSideSpeed y de drivetrainRightSideSpeed          */
 /*--------------------------------------------------------------------------*/
 void chassis_control(){
-  float pow = 0.7;
+  float pow = 1;
   int div = 2;
   //DESCOMENTAR ESTO PARA UNA VELOCIDAD MANEJABLE MEDIO LENTA MEDIO RAPIDA
-  int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (pow*Controller1.Axis1.position()))/div;
-  int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (pow*Controller1.Axis1.position()))/div;
+  int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (Controller1.Axis1.position()))*pow;
+  int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (Controller1.Axis1.position()))*pow;
   
   if (drivetrainLeftSideSpeed < JOYSTICK_DEADBAND && drivetrainLeftSideSpeed > -JOYSTICK_DEADBAND) {
     if (DrivetrainLNeedsToBeStopped_Controller1) {

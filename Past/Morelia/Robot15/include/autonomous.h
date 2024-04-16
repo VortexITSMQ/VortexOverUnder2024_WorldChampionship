@@ -27,7 +27,7 @@ void auton()
   Drivetrain.setDriveVelocity(28, pct);
   
   //Primera ida
-  Drivetrain.driveFor(fwd, 65, distanceUnits::cm);
+  Drivetrain.driveFor(fwd, 10, distanceUnits::cm);
   
   //Vuelta para empujar el trible
   Drivetrain.turnToHeading(-20, rotationUnits::deg, 110, rpm, true);
@@ -99,7 +99,7 @@ void skills()
   Drivetrain.setDriveVelocity(28, pct);
   
   //Primera ida
-  Drivetrain.driveFor(fwd, 120, distanceUnits::cm);
+  Drivetrain.driveFor(fwd, 10, distanceUnits::cm);
 
   //se acerca al trible rojo para agarrarlo
   Drivetrain.turnToHeading(-90, rotationUnits::deg, 100, rpm, true);

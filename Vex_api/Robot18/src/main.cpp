@@ -45,8 +45,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void display_info(){
-  std::cout << "COME PENE PEPE" << std::endl;
-  Brain.Screen.print("COME PENE PEPE");
+  std::cout << "PENE 8==D" << "\n" << std::endl;
+  Brain.Screen.print("PENE 8==D");
 }
 
 /*---------------------------------------------------------------------------*/

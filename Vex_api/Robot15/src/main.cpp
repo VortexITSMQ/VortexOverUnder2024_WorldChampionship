@@ -45,8 +45,22 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void display_info(){
-  std::cout << "COME PENE PEPE" << std::endl;
-  Brain.Screen.print("COME PENE PEPE");
+
+    const char* dog =
+    "   / \\__\n"
+    " (    @\\___\n"
+    "  /         O\n"
+    " /   (_____/\n"
+    "/_____/ U\n";
+
+  // Imprimir en la pantalla Brain
+  //Brain.Screen.clearScreen(); // Limpiar la pantalla antes de imprimir
+  //Brain.Screen.print(dog);
+
+  std::cout << DrivetrainInertial.heading() << "\n" << std::endl;
+  //Brain.Screen.print(LeftDriveA.temperature(percent));
+  Brain.Screen.print(" Heading: ");
+  Brain.Screen.print(Drivetrain.heading());
 }
 
 /*---------------------------------------------------------------------------*/
@@ -72,7 +86,7 @@ void autonomous(void) {
 }
 
 void skills(){
- skill();
+  skill();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -93,12 +107,12 @@ void usercontrol(void) {
 
 int main() {
   // Set up callbacks for autonomous and driver control periods.
-  Competition.autonomous(autonomous);
-  //Competition.autonomous(skills);
+  pre_auton();
+  //Competition.autonomous(autonomous);
+  Competition.autonomous(skills);
   Competition.drivercontrol(usercontrol);
   
   // Run the pre-autonomous function.
-  pre_auton();
   // Prevent main from exiting with an infinite loop.
   while (true) {
     display_info(); // Imprime info del robot

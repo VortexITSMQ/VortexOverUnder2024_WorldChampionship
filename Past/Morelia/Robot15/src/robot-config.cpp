@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "vex_global.h"
 #include "vex_motorgroup.h"
+#include "bits/stdc++.h"
 
 using namespace vex;
 using signature = vision::signature;
@@ -32,10 +33,10 @@ pneumatics IndexerLeft = pneumatics(Brain.ThreeWirePort.B);
 
 // Chassis
 inertial DrivetrainInertial = inertial(PORT13);
-motor RightDriveA = motor(PORT4, ratio18_1, false);//false
-motor RightDriveB = motor(PORT3, ratio18_1, false);//false
-motor LeftDriveA = motor(PORT1, ratio18_1, true); //11
-motor LeftDriveB = motor(PORT2, ratio18_1, true); //12
+motor RightDriveA = motor(PORT2, ratio18_1, true);//false
+motor RightDriveB = motor(PORT12, ratio18_1, true);//false
+motor LeftDriveA = motor(PORT9, ratio18_1, false); //11
+motor LeftDriveB = motor(PORT19, ratio18_1, false); //12
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainInertial, 
@@ -96,13 +97,18 @@ int rc_auto_loop_function_Controller1() {
 }
 
 void vexcodeInit( void ) {
-
-  wait(200, msec);
-  DrivetrainInertial.calibrate();
+  std::cout << "hola1" << std::endl;
+  //wait(200, msec);
+  std::cout << "hola2" << std::endl;
+  /*DrivetrainInertial.calibrate();
+  std::cout << "hola3" << std::endl;
   while (DrivetrainInertial.isCalibrating()) {
     wait(25, msec);
+    std::cout << "holaw" << std::endl;
   }
-  wait(50, msec);
+  std::cout << "hola7" << std::endl;
+  //wait(50, msec);
+  std::cout << "hola4" << std::endl;*/
 }
 
 void chassis_control(){

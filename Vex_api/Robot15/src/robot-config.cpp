@@ -16,12 +16,14 @@ controller Controller1 = controller(primary);
 // Motor rojo  ratio18_1
 // Motor verde ratio36_1
 // Motor azul  ratio6_1
-inertial DrivetrainInertial = inertial(PORT6);
-motor RightDriveA = motor(PORT12, ratio36_1, false);
-motor RightDriveB = motor(PORT2, ratio36_1, false);
+inertial DrivetrainInertial = inertial(PORT13);
+motor RightDriveA = motor(PORT2, ratio36_1, true);
+motor RightDriveB = motor(PORT12, ratio36_1, true);
 
-motor LeftDriveA = motor(PORT19, ratio36_1, true);
-motor LeftDriveB = motor(PORT10, ratio36_1, true);
+motor LeftDriveA = motor(PORT9, ratio36_1, false);
+motor LeftDriveB = motor(PORT19, ratio36_1, false);
+
+motor test = motor(PORT5, ratio36_1, true);
 
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
@@ -37,6 +39,7 @@ motor Thrower = motor(PORT11, ratio36_1, false);
 // Climber
 motor ClimberLeft = motor(PORT1, ratio18_1, false);
 motor ClimberRight = motor(PORT10, ratio18_1, true);
+motor_group Climber = motor_group(ClimberLeft, ClimberRight);
 
 // Wings
 pneumatics IndexerRight = pneumatics(Brain.ThreeWirePort.B);
@@ -182,11 +185,14 @@ void vexcodeInit( void ) {
 /*           drivetrainLeftSideSpeed y de drivetrainRightSideSpeed          */
 /*--------------------------------------------------------------------------*/
 void chassis_control(){
-  float pow = 0.7;
-  int div = 2;
+  float pow = 1;
+  int div = 1;
   //DESCOMENTAR ESTO PARA UNA VELOCIDAD MANEJABLE MEDIO LENTA MEDIO RAPIDA
-  int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (pow*Controller1.Axis1.position()))/div;
-  int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (pow*Controller1.Axis1.position()))/div;
+  //int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (pow*Controller1.Axis1.position()))/div;
+  //int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (pow*Controller1.Axis1.position()))/div;
+
+  int drivetrainLeftSideSpeed = (Controller1.Axis3.position() + (Controller1.Axis1.position()))*pow;
+  int drivetrainRightSideSpeed = (Controller1.Axis3.position() - (Controller1.Axis1.position()))*pow;
   
   if (drivetrainLeftSideSpeed < JOYSTICK_DEADBAND && drivetrainLeftSideSpeed > -JOYSTICK_DEADBAND) {
     if (DrivetrainLNeedsToBeStopped_Controller1) {

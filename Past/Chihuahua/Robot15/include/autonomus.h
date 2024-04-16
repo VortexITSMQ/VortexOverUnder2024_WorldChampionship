@@ -13,12 +13,12 @@ void auton()
   Drivetrain.setDriveVelocity(25, pct);
 
   //Primera ida
-  Drivetrain.driveFor(fwd, 70, distanceUnits::cm);
+  Drivetrain.driveFor(fwd, 10, distanceUnits::cm);
   
   /*-----------------------------
   * Vuelta para empujar el trible
   * -----------------------------*/
-  Drivetrain.turnToHeading(-30, rotationUnits::deg, 50, rpm, true);
+  Drivetrain.turnToHeading(20, rotationUnits::deg, 50, rpm, true);
   IndexerRight.set(true);
   Drivetrain.turnToHeading(185, rotationUnits::deg, 80, rpm, true);
   IndexerRight.set(false);

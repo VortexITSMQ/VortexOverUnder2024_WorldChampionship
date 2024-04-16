@@ -10,10 +10,10 @@
 #include <math.h>
 
 //----------------- Robot constants -----------------//
-const double WHEEL_DIAMETER = 82.55;    //mm
+const double WHEEL_DIAMETER = 100;    //mm
 const double WHEEL_TRAVEL   = M_PI * WHEEL_DIAMETER;
-const double TRACK_WIDTH    = 230;      //mm
-const double TRACK_BASE     = 200;      //mm
+const double TRACK_WIDTH    = 360;      //mm
+const double TRACK_BASE     = 370;      //mm
 const double EXT_GEAR_RATIO = 1;    
 
 //----------------- Autonomous time -----------------//
