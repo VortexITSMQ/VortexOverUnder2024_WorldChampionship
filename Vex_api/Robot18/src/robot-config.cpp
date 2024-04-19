@@ -15,11 +15,11 @@ controller Controller1 = controller(primary);
 // Motor verde ratio36_1
 // Motor azul  ratio6_1
 inertial DrivetrainInertial = inertial(PORT14);
-motor LeftDriveA = motor(PORT10, ratio36_1, true);
-motor LeftDriveB = motor(PORT3, ratio36_1, true);
+motor LeftDriveA = motor(PORT1, ratio36_1, true);
+motor LeftDriveB = motor(PORT12, ratio36_1, true);
 
-motor RightDriveA = motor(PORT20, ratio36_1, false);
-motor RightDriveB = motor(PORT13, ratio36_1, false);
+motor RightDriveA = motor(PORT10, ratio36_1, false);
+motor RightDriveB = motor(PORT20, ratio36_1, false);
 
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
