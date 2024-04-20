@@ -41,6 +41,11 @@ motor ClimberLeft = motor(PORT7, ratio18_1, false);
 motor ClimberRight = motor(PORT11, ratio18_1, true);
 motor_group Climber = motor_group(ClimberLeft, ClimberRight);
 
+// Climber Little
+motor ClimberLilLeft = motor(PORT2, ratio18_1, false);
+motor ClimberLilRight = motor(PORT3, ratio18_1, true);
+motor_group ClimberLil = motor_group(ClimberLilLeft, ClimberRight);
+
 // Controller options 
 bool RemoteControlCodeEnabled = true;
 bool DrivetrainLNeedsToBeStopped_Controller1 = true;
@@ -140,6 +145,22 @@ void Climber_bwd_cb(){
   Climber.stop();
 }
 
+//-------------------------------------------------------
+
+void ClimberLil_fwd_cb(){
+  while (Controller1.ButtonX.pressing()){
+    ClimberLil.spin(fwd, 30, percent);
+  }
+  ClimberLil.stop();
+}
+
+void ClimberLil_bwd_cb(){
+  while (Controller1.ButtonB.pressing()){
+    ClimberLil.spin(reverse, 30, percent);
+  }
+  ClimberLil.stop();
+}
+
 /*--------------------------------------------------------------------------*/
 /*                   rc_auto_loop_function_Controller1()                    */
 /*                                                                          */
@@ -153,9 +174,15 @@ int rc_auto_loop_function_Controller1() {
   //Controller1.ButtonX.pressed(Wings_cb);
   Controller1.ButtonUp.pressed(Climber_fwd_cb);
   Controller1.ButtonDown.pressed(Climber_bwd_cb);
+
+  Controller1.ButtonX.pressed(ClimberLil_fwd_cb);
+  Controller1.ButtonB.pressed(ClimberLil_bwd_cb);
+
   Controller1.ButtonR1.pressed(Collector_fwd_cb);
   Controller1.ButtonR2.pressed(Collector_bwd_cb);
+  
   Controller1.ButtonA.pressed(Thrower_cb);
+
   while(true) {
     chassis_control();
   }

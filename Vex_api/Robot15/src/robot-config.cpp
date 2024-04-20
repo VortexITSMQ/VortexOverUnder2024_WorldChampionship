@@ -17,13 +17,11 @@ controller Controller1 = controller(primary);
 // Motor verde ratio36_1
 // Motor azul  ratio6_1
 inertial DrivetrainInertial = inertial(PORT13);
-motor RightDriveA = motor(PORT2, ratio36_1, true);
-motor RightDriveB = motor(PORT12, ratio36_1, true);
+motor RightDriveA = motor(PORT9, ratio36_1, false);
+motor RightDriveB = motor(PORT19, ratio36_1, false);
 
-motor LeftDriveA = motor(PORT9, ratio36_1, false);
-motor LeftDriveB = motor(PORT19, ratio36_1, false);
-
-motor test = motor(PORT5, ratio36_1, true);
+motor LeftDriveA = motor(PORT2, ratio36_1, true);
+motor LeftDriveB = motor(PORT12, ratio36_1, true);
 
 motor_group LeftDriveSmart = motor_group(LeftDriveA, LeftDriveB);
 motor_group RightDriveSmart = motor_group(RightDriveA, RightDriveB);
@@ -34,7 +32,7 @@ smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainIn
 
 
 //Thrower
-motor Thrower = motor(PORT11, ratio36_1, false);
+motor Thrower = motor(PORT20, ratio36_1, false);
 
 // Climber
 motor ClimberLeft = motor(PORT1, ratio18_1, false);
@@ -42,8 +40,8 @@ motor ClimberRight = motor(PORT10, ratio18_1, true);
 motor_group Climber = motor_group(ClimberLeft, ClimberRight);
 
 // Wings
-pneumatics IndexerRight = pneumatics(Brain.ThreeWirePort.B);
-pneumatics IndexerLeft = pneumatics(Brain.ThreeWirePort.A);
+pneumatics IndexerRight = pneumatics(Brain.ThreeWirePort.G);
+pneumatics IndexerLeft = pneumatics(Brain.ThreeWirePort.H);
 
 // Controller options 
 bool RemoteControlCodeEnabled = true;
@@ -65,9 +63,9 @@ bool Throwing = false;
 
 void Thrower_cb() {
   if (!Throwing) {
-    Thrower.setVelocity(20, velocityUnits::pct);
+    Thrower.setVelocity(35, velocityUnits::pct);
     while (true) {
-      Thrower.spin(directionType::rev);
+      Thrower.spin(directionType::fwd);
     }
     Throwing = true;
   } else {
