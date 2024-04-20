@@ -108,8 +108,8 @@ void usercontrol(void) {
 int main() {
   // Set up callbacks for autonomous and driver control periods.
   pre_auton();
-  //Competition.autonomous(autonomous);
-  Competition.autonomous(skills);
+  Competition.autonomous(autonomous);
+  //Competition.autonomous(skills);
   Competition.drivercontrol(usercontrol);
   
   // Run the pre-autonomous function.

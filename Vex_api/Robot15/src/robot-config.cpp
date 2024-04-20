@@ -16,7 +16,7 @@ controller Controller1 = controller(primary);
 // Motor rojo  ratio18_1
 // Motor verde ratio36_1
 // Motor azul  ratio6_1
-inertial DrivetrainInertial = inertial(PORT13);
+inertial DrivetrainInertial = inertial(PORT7);
 motor RightDriveA = motor(PORT9, ratio36_1, false);
 motor RightDriveB = motor(PORT19, ratio36_1, false);
 
@@ -40,8 +40,8 @@ motor ClimberRight = motor(PORT10, ratio18_1, true);
 motor_group Climber = motor_group(ClimberLeft, ClimberRight);
 
 // Wings
-pneumatics IndexerRight = pneumatics(Brain.ThreeWirePort.G);
-pneumatics IndexerLeft = pneumatics(Brain.ThreeWirePort.H);
+pneumatics IndexerRight = pneumatics(Brain.ThreeWirePort.H);
+pneumatics IndexerLeft = pneumatics(Brain.ThreeWirePort.G);
 
 // Controller options 
 bool RemoteControlCodeEnabled = true;
@@ -123,14 +123,14 @@ void Wings_cb(){
   //If the wings are open then we close them
   if (!WingAreOpen) {
     // Wing.spinToPosition(100, degrees, true);
-    IndexerLeft.set(true);
+    //IndexerLeft.set(true);
     IndexerRight.set(true);
     WingAreOpen = true;
   }
   // If the wings are close then we open them
   else {
     // Wing.spinToPosition(-100, degrees, true);
-    IndexerLeft.set(false);
+    //IndexerLeft.set(false);
     IndexerRight.set(false);
     WingAreOpen = false;
   }

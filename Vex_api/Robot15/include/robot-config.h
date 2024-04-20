@@ -22,6 +22,8 @@ extern motor Thrower;
 // Climber
 extern motor ClimberLeft;
 extern motor ClimberRight;
+extern motor_group Climber;
+
 
 // Wings
 extern pneumatics IndexerRight;
