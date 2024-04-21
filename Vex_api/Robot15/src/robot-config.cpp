@@ -6,7 +6,7 @@ using namespace vex;
 
 bool WingAreOpen = false;
 
-// Cerebelo
+// 
 brain Brain;
 
 // Control (mando)
@@ -123,14 +123,14 @@ void Wings_cb(){
   //If the wings are open then we close them
   if (!WingAreOpen) {
     // Wing.spinToPosition(100, degrees, true);
-    //IndexerLeft.set(true);
+    IndexerLeft.set(true);
     IndexerRight.set(true);
     WingAreOpen = true;
   }
   // If the wings are close then we open them
   else {
     // Wing.spinToPosition(-100, degrees, true);
-    //IndexerLeft.set(false);
+    IndexerLeft.set(false);
     IndexerRight.set(false);
     WingAreOpen = false;
   }
