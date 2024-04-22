@@ -34,7 +34,7 @@ motor LeftCollector = motor(PORT16, ratio36_1, false);
 motor_group Collector = motor_group(LeftCollector, RightCollector);
 
 //Thrower
-motor Thrower = motor(PORT19, ratio18_1, false);
+motor Thrower = motor(PORT11, ratio18_1, false);
 
 // Climber
 motor ClimberLeft = motor(PORT7, ratio18_1, false);
@@ -104,21 +104,19 @@ void Collector_bwd_cb(){
    |__/   |__/  |__/|__/       \______/  \_____/\___/  \_______/|__/                 |
 ------------------------------------------------------------------------------------*/
 
+
 bool Throwing = false;
 
 void Thrower_cb() {
   if (!Throwing) {
     Thrower.setVelocity(20, velocityUnits::pct);
-    while (true) {
-      Thrower.spin(directionType::rev);
-    }
+    Thrower.spin(directionType::rev);
     Throwing = true;
   } else {
     Thrower.stop();
     Throwing = false;
   }
 }
-
 
 /*-----------------------------------------------------------------------------------\
   /$$$$$$  /$$ /$$               /$$                                                 |
