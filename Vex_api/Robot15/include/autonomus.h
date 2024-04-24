@@ -6,23 +6,7 @@
 
 using namespace vex;
 
-//------- Aux function definition -------//
-/*void inertial_turn(int lower_angle, int upper_angle, int speed, bool turn_right) {
-    while (true) {
-        double current_angle = DrivetrainInertial.heading();
-        if (lower_angle < current_angle && current_angle < upper_angle) {
-            Drivetrain.stop();
-            break;
-        }
-        else {
-            // Establecer la velocidad y la dirección del giro
-            Drivetrain.setTurnVelocity(speed, percent);
-            (turn_right) ? Drivetrain.turn(right) : Drivetrain.turn(left);
-            wait(20, msec);
-        }
-    }
-}
-*/
+
 void girarDuracion(int duracion, double velocidad, bool turn_right) {
     // Configurar la velocidad de giro de los motores
     Drivetrain.setTurnVelocity(velocidad, pct);
@@ -75,6 +59,7 @@ void auton()
   * ---------------*/
   Drivetrain.setDriveVelocity(20, pct);
   Drivetrain.driveFor(reverse,35, distanceUnits::cm, true);
+
   /*-----------------
   * Suelta el trible
   * -----------------*/  
@@ -85,6 +70,7 @@ void auton()
   Climber.spin(reverse, 45, percent);
   wait(5, seconds);
   Climber.stop();
+  
   /*-----------------
   * Empuja el trible
   * -----------------*/
@@ -99,22 +85,64 @@ void auton()
 //--------- Main skills functions ---------//
 void skill()
 {
-  //DrivetrainInertial.calibrate();
 
-  //Drivetrain.setDriveVelocity(90, pct);
+  /*-----------------
+  * Saca tribals
+  * -----------------*/
+  // Thrower.spin(fwd, 35, pct);
+  // wait(20, sec);
+  // Thrower.stop();
 
-  //***************************************
-  //AQUI VA EL código del BRAZO AVENTANDO
+  /*-----------------------------------
+  * Atora el brazo para que no estorbe
+  * -----------------------------------*/
+  // Thrower.spin(fwd, 90, pct);
+  // wait(400, msec);
+  // Thrower.stop(hold);
+
+  /*--------------------------------------------------
+  * Se acomoda para girar y empujar los triballs
+  * --------------------------------------------------*/
+  Drivetrain.setDriveVelocity(15, pct);
+  Drivetrain.driveFor(fwd, 3, distanceUnits::cm);
+  girarDuracion(300,10,true);
+  Drivetrain.driveFor(reverse, 14, distanceUnits::cm);
+  girarDuracion(363,20,true);
+
+  /*--------------------------------------------------
+  * Empuja los triballs para que no estorben
+  * --------------------------------------------------*/
+  Drivetrain.setDriveVelocity(40, pct);
+  Drivetrain.driveFor(reverse, 2, distanceUnits::cm);
+  Drivetrain.setDriveVelocity(10, pct);
+  Drivetrain.driveFor(fwd, 2, distanceUnits::cm);
+
+  /*------------------------------------
+  * Gira para empujar despues de frente
+  * ------------------------------------*/
+  girarDuracion(1600,15,true);
+
+
+  /*------------------------------
+  * Ida al otro lado de la cancha
+  * ------------------------------*/
+  Drivetrain.setDriveVelocity(20, pct);
+  Drivetrain.driveFor(fwd, 45, distanceUnits::cm);
+
+  /*------------------------------
+  * Gira para empujar los triballs
+  * ------------------------------*/
+  girarDuracion(370,20,true);
+  IndexerRight.set(true);
+  IndexerLeft.set(true);
+
+  Drivetrain.driveFor(fwd, 10, distanceUnits::cm);
+  girarDuracion(370,20,true);
+  Drivetrain.setDriveVelocity(100, pct);
+  Drivetrain.driveFor(fwd, 10, distanceUnits::cm);
 
 
 
-  //***************************************
 
-  //Drivetrain.driveFor(reverse, 10, distanceUnits::cm);
-  //DrivetrainInertial.calibrate();
-//inertial_turn(89, 91, 15, false);
-  //Drivetrain.turnToHeading(90, rotationUnits::deg, 90, rpm, true);
-  //girarGrados(20, 20);
-  //Drivetrain.driveFor(reverse, 100, distanceUnits::cm);
 
 }

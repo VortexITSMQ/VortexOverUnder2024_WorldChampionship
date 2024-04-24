@@ -32,7 +32,7 @@ smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, DrivetrainIn
 
 
 //Thrower
-motor Thrower = motor(PORT20, ratio36_1, false);
+motor Thrower = motor(PORT15, ratio36_1, false);
 
 // Climber
 motor ClimberLeft = motor(PORT1, ratio18_1, false);
@@ -64,9 +64,7 @@ bool Throwing = false;
 void Thrower_cb() {
   if (!Throwing) {
     Thrower.setVelocity(35, velocityUnits::pct);
-    while (true) {
-      Thrower.spin(directionType::fwd);
-    }
+    Thrower.spin(directionType::fwd);
     Throwing = true;
   } else {
     Thrower.stop();
