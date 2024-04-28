@@ -45,8 +45,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void display_info(){
-  std::cout << "PENE 8==D" << "\n" << std::endl;
-  Brain.Screen.print("PENE 8==D");
+  std::cout << DrivetrainInertial.heading() << "\n" << std::endl;
+  Brain.Screen.print(DrivetrainInertial.heading());
 }
 
 /*---------------------------------------------------------------------------*/
@@ -93,15 +93,15 @@ void usercontrol(void) {
 
 int main() {
   // Set up callbacks for autonomous and driver control periods.
-  Competition.autonomous(autonomous);
-  //Competition.autonomous(skills);
+  //Competition.autonomous(autonomous);
+  Competition.autonomous(skills);
   Competition.drivercontrol(usercontrol);
   
   // Run the pre-autonomous function.
   pre_auton();
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    // display_info(); // Imprime info del robot
+    display_info(); // Imprime info del robot
     wait(100, msec);
   }
 }
