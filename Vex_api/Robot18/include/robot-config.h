@@ -23,6 +23,13 @@ extern motor LeftCollector;
 //Thrower
 extern motor Thrower;
 
+//Climber
+extern motor ClimberLeft;
+extern motor ClimberRight;
+extern motor_group Climber;
+extern motor Blocker;
+
+
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
